@@ -1,9 +1,9 @@
 --- 
 applications: 
-- name: springmvc-hibernate-template
+- name: doctor-merchant-app
   memory: 512M
   instances: 1
-  host: springmvc-hibernate-template-${random-word}
+  host: doctor-merchant-app-${random-word}
   domain: cfapps.io
   path: target
   services: 
