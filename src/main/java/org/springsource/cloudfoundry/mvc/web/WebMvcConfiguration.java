@@ -32,7 +32,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
-		generateToken();
+		String token = generateToken();
 		InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
 		internalResourceViewResolver.setViewClass(JstlView.class);
 		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
@@ -40,7 +40,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 		return internalResourceViewResolver;
 	}
 
-	private void generateToken() {
+	private String generateToken() {
 		try {
 			URL url = new URL("https://test.ctpe.net/frontend/GenerateToken");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -63,11 +63,13 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 			conn.connect();
 
 			String content = IOUtils.toString(conn.getInputStream());
-			System.out.println(content);
+			log.info(content);
+			return content;
 		} catch (Exception ex) {
 			log.error("error while sending the generate token: "
 					+ ex.getMessage());
 		}
+		return null;
 	}
 
 	@Bean
